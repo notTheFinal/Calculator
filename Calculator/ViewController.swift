@@ -11,9 +11,6 @@ func divOpperation(_ a: Int, _ b: Int) -> String {
     return (b != 0 ? String(a/b) : "Ошибка")
 }
 
-func multiOpperation(_ a: Int, _ b: Int) -> String {
-    return String(a*b)
-}
 
 enum signes {
     case div
@@ -38,8 +35,7 @@ func equalfunc() -> String{
     var result = 0
     switch sign {
     case .div:
-        result = firstNumberInt! / secondNumberInt!
-        return String(result)
+        return (secondNumberInt! != 0 ? String(firstNumberInt! / secondNumberInt!) : "Ошибка")
     case .multi:
         result = firstNumberInt! * secondNumberInt!
     case .plus:
@@ -69,7 +65,11 @@ func workSpace(_ signFromButton: signes) -> String{
     else if secondNumber.isEmpty {
         secondNumber = expressionString
         expressionString = ""
-        return equalfunc()
+        // Итоговый результат вновь обозначаем как первое число
+        firstNumber = equalfunc()
+        // Второе число обнуляем
+        secondNumber = ""
+        return firstNumber
     }
     return ""
 }
@@ -82,42 +82,52 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     @IBAction func zeroButton(_ sender: Any) {
+        checkLabel()
         addToLabel("0")
         expressionString+="0"
     }
     @IBAction func oneButton(_ sender: Any) {
+        checkLabel()
         addToLabel("1")
         expressionString+="1"
     }
     @IBAction func twoButton(_ sender: Any) {
+        checkLabel()
         addToLabel("2")
         expressionString+="2"
     }
     @IBAction func threeButton(_ sender: Any) {
+        checkLabel()
         addToLabel("3")
         expressionString+="3"
     }
     @IBAction func fourButton(_ sender: Any) {
+        checkLabel()
         addToLabel("4")
         expressionString+="4"
     }
     @IBAction func fiveButton(_ sender: Any) {
+        checkLabel()
         addToLabel("5")
         expressionString+="5"
     }
     @IBAction func sixButton(_ sender: Any) {
+        checkLabel()
         addToLabel("6")
         expressionString+="6"
     }
     @IBAction func sevenButton(_ sender: Any) {
+        checkLabel()
         addToLabel("7")
         expressionString+="7"
     }
     @IBAction func eightButton(_ sender: Any) {
+        checkLabel()
         addToLabel("8")
         expressionString+="8"
     }
     @IBAction func nineButton(_ sender: Any) {
+        checkLabel()
         addToLabel("9")
         expressionString+="9"
     }
@@ -125,28 +135,43 @@ class ViewController: UIViewController {
     @IBAction func divButton(_ sender: Any) {
         // Вызываем Воркспейс и передаем ему нашу оперцию из енума
         label.text = workSpace(.div)
+        print(firstNumber)
+        print(secondNumber)
+        print("-------")
+
+        
+        
     }
     @IBAction func multiplicationButton(_ sender: Any) {
+        label.text = workSpace(.multi)
     }
     @IBAction func minusButton(_ sender: Any) {
+        label.text = workSpace(.minus)
     }
     @IBAction func plusButton(_ sender: Any) {
+        label.text = workSpace(.plus)
     }
     @IBAction func equalsButton(_ sender: Any) {
+        label.text = workSpace(.equal)
         
     }
     
     @IBAction func percentButton(_ sender: Any) {
+        label.text = workSpace(.percent)
     }
     @IBAction func plusMinusButton(_ sender: Any) {
+        label.text = workSpace(.plusMinus)
     }
     @IBAction func allClearButton(_ sender: Any) {
         clearAll()
         expressionString = ""
-        // добавить обнуление чисел
+        firstNumber = ""
+        secondNumber = ""
+
     }
     
     @IBAction func pointButton(_ sender: Any) {
+        checkLabel()
         addToLabel(".")
     }
     
@@ -161,6 +186,11 @@ class ViewController: UIViewController {
     }
     func clearAll() {
         label.text! = "0"
+    }
+    func checkLabel() {
+        if expressionString.isEmpty && !label.text!.isEmpty {
+            label.text! = ""
+        }
     }
     
 }
