@@ -7,11 +7,6 @@
 
 import UIKit
 
-func divOpperation(_ a: Int, _ b: Int) -> String {
-    return (b != 0 ? String(a/b) : "Ошибка")
-}
-
-
 enum signes {
     case div
     case multi
@@ -28,8 +23,9 @@ var firstNumber: String = ""
 var secondNumber: String = ""
 var sign: signes = .none
 
-// Функция кнопки равно, если вызывается в какой-то другой операции, то возвращает результат как firstNumber
-func equalfunc() -> String{
+
+// Функция кнопок, если вызывается в какой-то другой операции, то возвращает результат как firstNumber
+func equalfunc(_ sign: signes) -> String{
     let firstNumberInt = Int(firstNumber)
     let secondNumberInt = Int(secondNumber)
     var result = 0
@@ -37,7 +33,7 @@ func equalfunc() -> String{
     case .div:
         return (secondNumberInt! != 0 ? String(firstNumberInt! / secondNumberInt!) : "Ошибка")
     case .multi:
-        result = firstNumberInt! * secondNumberInt!
+        return String(secondNumberInt! * firstNumberInt!)
     case .plus:
         result = firstNumberInt! + secondNumberInt!
     case .minus:
@@ -57,16 +53,20 @@ func equalfunc() -> String{
 
 // Распределяем из общего потока символов первое и второе число, а также операцию
 func workSpace(_ signFromButton: signes) -> String{
+    sign = signFromButton
     if firstNumber.isEmpty {
         firstNumber = expressionString
         expressionString = ""
-        sign = signFromButton
     }
     else if secondNumber.isEmpty {
-        secondNumber = expressionString
+        if expressionString.isEmpty {
+            secondNumber = firstNumber
+        } else {
+            secondNumber = expressionString
+        }
         expressionString = ""
         // Итоговый результат вновь обозначаем как первое число
-        firstNumber = equalfunc()
+        firstNumber = equalfunc(sign)
         // Второе число обнуляем
         secondNumber = ""
         return firstNumber
@@ -135,12 +135,6 @@ class ViewController: UIViewController {
     @IBAction func divButton(_ sender: Any) {
         // Вызываем Воркспейс и передаем ему нашу оперцию из енума
         label.text = workSpace(.div)
-        print(firstNumber)
-        print(secondNumber)
-        print("-------")
-
-        
-        
     }
     @IBAction func multiplicationButton(_ sender: Any) {
         label.text = workSpace(.multi)
