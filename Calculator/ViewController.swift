@@ -53,7 +53,11 @@ func equalfunc(_ sign: signes) -> String{
 
 // Распределяем из общего потока символов первое и второе число, а также операцию
 func workSpace(_ signFromButton: signes) -> String{
-    sign = signFromButton
+    print(sign)
+    if sign == .none {
+        sign = signFromButton
+    }
+    print(sign)
     if firstNumber.isEmpty {
         firstNumber = expressionString
         expressionString = ""
@@ -69,6 +73,7 @@ func workSpace(_ signFromButton: signes) -> String{
         firstNumber = equalfunc(sign)
         // Второе число обнуляем
         secondNumber = ""
+        sign = signFromButton
         return firstNumber
     }
     return ""
