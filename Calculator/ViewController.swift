@@ -35,15 +35,15 @@ func equalfunc(_ sign: signes) -> String{
     case .multi:
         return String(secondNumberInt! * firstNumberInt!)
     case .plus:
-        result = firstNumberInt! + secondNumberInt!
+        return String(firstNumberInt! + secondNumberInt!)
     case .minus:
-        result = firstNumberInt! - secondNumberInt!
+        return String(firstNumberInt! - secondNumberInt!)
     case .equal:
-        result = firstNumberInt!
+        return String(firstNumberInt!)
     case .percent:
-        result = firstNumberInt!
+        return String(firstNumberInt! * 1)
     case .plusMinus:
-        result = firstNumberInt! * -1
+        return String(firstNumberInt! * -1)
     case .none:
         result = firstNumberInt! / secondNumberInt!
     }
@@ -166,6 +166,7 @@ class ViewController: UIViewController {
         expressionString = ""
         firstNumber = ""
         secondNumber = ""
+        sign = .none
 
     }
     
