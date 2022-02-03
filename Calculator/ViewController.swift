@@ -19,7 +19,7 @@ enum signes {
 }
 
 var expressionString: String = ""
-var firstNumber: String = ""
+var firstNumber: String = "0"
 var secondNumber: String = ""
 var sign: signes = .none
 
@@ -53,12 +53,10 @@ func equalfunc(_ sign: signes) -> String{
 
 // Распределяем из общего потока символов первое и второе число, а также операцию
 func workSpace(_ signFromButton: signes) -> String{
-    print(sign)
     if sign == .none {
         sign = signFromButton
     }
-    print(sign)
-    if firstNumber.isEmpty {
+    if firstNumber.isEmpty || firstNumber == "0"{
         firstNumber = expressionString
         expressionString = ""
     }
@@ -159,12 +157,19 @@ class ViewController: UIViewController {
         label.text = workSpace(.percent)
     }
     @IBAction func plusMinusButton(_ sender: Any) {
-        label.text = workSpace(.plusMinus)
+        if expressionString.isEmpty && secondNumber.isEmpty && !firstNumber.isEmpty {
+            firstNumber = String(Int(firstNumber)! * -1)
+            label.text = firstNumber
+        } else if !expressionString.isEmpty {
+            expressionString = String(Int(expressionString)! * -1)
+            label.text = expressionString
+        }
+        //label.text = workSpace(.plusMinus)
     }
     @IBAction func allClearButton(_ sender: Any) {
         clearAll()
         expressionString = ""
-        firstNumber = ""
+        firstNumber = "0"
         secondNumber = ""
         sign = .none
 
