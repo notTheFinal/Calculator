@@ -26,9 +26,9 @@ var sign: signes = .none
 
 // Функция кнопок, если вызывается в какой-то другой операции, то возвращает результат как firstNumber
 func equalfunc(_ sign: signes) -> String{
-    let firstNumberInt = Int(firstNumber)
-    let secondNumberInt = Int(secondNumber)
-    var result = 0
+//    if firstNumber
+    let firstNumberInt = Double(firstNumber)
+    let secondNumberInt = Double(secondNumber)
     switch sign {
     case .div:
         return (secondNumberInt! != 0 ? String(firstNumberInt! / secondNumberInt!) : "Ошибка")
@@ -45,10 +45,8 @@ func equalfunc(_ sign: signes) -> String{
     case .plusMinus:
         return String(firstNumberInt! * -1)
     case .none:
-        result = firstNumberInt! / secondNumberInt!
+        return ""
     }
-    
-    return ""
 }
 
 // Распределяем из общего потока символов первое и второе число, а также операцию
@@ -68,6 +66,7 @@ func workSpace(_ signFromButton: signes) -> String{
         }
         expressionString = ""
         // Итоговый результат вновь обозначаем как первое число
+        print(firstNumber)
         firstNumber = equalfunc(sign)
         // Второе число обнуляем
         secondNumber = ""
@@ -177,6 +176,7 @@ class ViewController: UIViewController {
     
     @IBAction func pointButton(_ sender: Any) {
         checkLabel()
+        expressionString+="."
         addToLabel(".")
     }
     
