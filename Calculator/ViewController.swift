@@ -41,7 +41,7 @@ func equalfunc(_ sign: signes) -> String{
     case .equal:
         return String(firstNumberInt!)
     case .percent:
-        return String(firstNumberInt! * 1)
+        return String(firstNumberInt! * 0.01)
     case .plusMinus:
         return String(firstNumberInt! * -1)
     case .none:
@@ -153,7 +153,13 @@ class ViewController: UIViewController {
     }
     
     @IBAction func percentButton(_ sender: Any) {
-        label.text = workSpace(.percent)
+        if expressionString.isEmpty && secondNumber.isEmpty && !firstNumber.isEmpty {
+            firstNumber = String(Double(firstNumber)! * 0.01)
+            label.text = firstNumber
+        } else if !expressionString.isEmpty {
+            expressionString = String(Double(expressionString)! * 0.01)
+            label.text = expressionString
+        }
     }
     @IBAction func plusMinusButton(_ sender: Any) {
         if expressionString.isEmpty && secondNumber.isEmpty && !firstNumber.isEmpty {
@@ -163,7 +169,6 @@ class ViewController: UIViewController {
             expressionString = String(Int(expressionString)! * -1)
             label.text = expressionString
         }
-        //label.text = workSpace(.plusMinus)
     }
     @IBAction func allClearButton(_ sender: Any) {
         clearAll()
@@ -175,9 +180,14 @@ class ViewController: UIViewController {
     }
     
     @IBAction func pointButton(_ sender: Any) {
+        if label.text! == "0" && expressionString.isEmpty {
+            expressionString += "0"
+        }
         checkLabel()
-        expressionString+="."
-        addToLabel(".")
+        if !label.text!.contains(".") {
+            expressionString+="."
+            addToLabel(".")
+        }
     }
     
     
