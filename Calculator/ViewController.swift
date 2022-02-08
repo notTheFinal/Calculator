@@ -1,10 +1,3 @@
-//
-//  ViewController.swift
-//  Calculator
-//
-//  Created by Александр on 02.12.2021.
-//
-
 import UIKit
 
 enum signes {
@@ -26,7 +19,6 @@ var sign: signes = .none
 
 // Функция кнопок, если вызывается в какой-то другой операции, то возвращает результат как firstNumber
 func equalfunc(_ sign: signes) -> String{
-//    if firstNumber
     let firstNumberInt = Double(firstNumber)
     let secondNumberInt = Double(secondNumber)
     switch sign {
@@ -51,8 +43,14 @@ func equalfunc(_ sign: signes) -> String{
 
 // Распределяем из общего потока символов первое и второе число, а также операцию
 func workSpace(_ signFromButton: signes) -> String{
-    if sign == .none {
+    let formatter = NumberFormatter()
+    formatter.minimumFractionDigits = 0
+    formatter.maximumFractionDigits = 2
+    if sign == .none{
         sign = signFromButton
+        
+    } else if sign == .equal && signFromButton != sign {
+        firstNumber = expressionString
     }
     if firstNumber.isEmpty || firstNumber == "0"{
         firstNumber = expressionString
@@ -66,12 +64,11 @@ func workSpace(_ signFromButton: signes) -> String{
         }
         expressionString = ""
         // Итоговый результат вновь обозначаем как первое число
-        print(firstNumber)
         firstNumber = equalfunc(sign)
         // Второе число обнуляем
         secondNumber = ""
         sign = signFromButton
-        return firstNumber
+        return String(format: "%g", Double(firstNumber)!)
     }
     return ""
 }
@@ -163,10 +160,10 @@ class ViewController: UIViewController {
     }
     @IBAction func plusMinusButton(_ sender: Any) {
         if expressionString.isEmpty && secondNumber.isEmpty && !firstNumber.isEmpty {
-            firstNumber = String(Int(firstNumber)! * -1)
+            firstNumber = String(Double(firstNumber)! * -1)
             label.text = firstNumber
         } else if !expressionString.isEmpty {
-            expressionString = String(Int(expressionString)! * -1)
+            expressionString = String(Double(expressionString)! * -1)
             label.text = expressionString
         }
     }
@@ -209,7 +206,3 @@ class ViewController: UIViewController {
     }
     
 }
-
-
-
-
