@@ -48,10 +48,10 @@ func workSpace(_ signFromButton: signes) -> String{
     formatter.maximumFractionDigits = 2
     if sign == .none{
         sign = signFromButton
-        
-    } else if sign == .equal && signFromButton != sign {
-        firstNumber = expressionString
     }
+//    else if sign == .equal && signFromButton != sign {
+//        firstNumber = expressionString
+//    }
     if firstNumber.isEmpty || firstNumber == "0"{
         firstNumber = expressionString
         expressionString = ""
@@ -81,54 +81,64 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     @IBAction func zeroButton(_ sender: Any) {
-        checkLabel()
-        addToLabel("0")
+        clearLabel()
         expressionString+="0"
+        checkLabel("number")
+        addToLabel("0")
     }
     @IBAction func oneButton(_ sender: Any) {
-        checkLabel()
-        addToLabel("1")
+        clearLabel()
         expressionString+="1"
+        checkLabel("number")
+        addToLabel("1")
     }
     @IBAction func twoButton(_ sender: Any) {
-        checkLabel()
-        addToLabel("2")
+        clearLabel()
         expressionString+="2"
+        checkLabel("number")
+        addToLabel("2")
     }
     @IBAction func threeButton(_ sender: Any) {
-        checkLabel()
-        addToLabel("3")
+        clearLabel()
         expressionString+="3"
+        checkLabel("number")
+        addToLabel("3")
     }
     @IBAction func fourButton(_ sender: Any) {
-        checkLabel()
-        addToLabel("4")
+        clearLabel()
         expressionString+="4"
+        checkLabel("number")
+        addToLabel("4")
     }
     @IBAction func fiveButton(_ sender: Any) {
-        checkLabel()
-        addToLabel("5")
+        clearLabel()
         expressionString+="5"
+        checkLabel("number")
+        addToLabel("5")
     }
     @IBAction func sixButton(_ sender: Any) {
-        checkLabel()
-        addToLabel("6")
+        clearLabel()
         expressionString+="6"
+        checkLabel("number")
+        addToLabel("6")
     }
     @IBAction func sevenButton(_ sender: Any) {
-        checkLabel()
-        addToLabel("7")
+        clearLabel()
         expressionString+="7"
+        checkLabel("number")
+        addToLabel("7")
     }
     @IBAction func eightButton(_ sender: Any) {
-        checkLabel()
-        addToLabel("8")
+        clearLabel()
         expressionString+="8"
+        checkLabel("number")
+        addToLabel("8")
     }
     @IBAction func nineButton(_ sender: Any) {
-        checkLabel()
-        addToLabel("9")
+        clearLabel()
         expressionString+="9"
+        checkLabel("number")
+        addToLabel("9")
     }
     
     @IBAction func divButton(_ sender: Any) {
@@ -169,10 +179,7 @@ class ViewController: UIViewController {
     }
     @IBAction func allClearButton(_ sender: Any) {
         clearAll()
-        expressionString = ""
-        firstNumber = "0"
-        secondNumber = ""
-        sign = .none
+
 
     }
     
@@ -180,7 +187,7 @@ class ViewController: UIViewController {
         if label.text! == "0" && expressionString.isEmpty {
             expressionString += "0"
         }
-        checkLabel()
+        clearLabel()
         if !label.text!.contains(".") {
             expressionString+="."
             addToLabel(".")
@@ -198,10 +205,21 @@ class ViewController: UIViewController {
     }
     func clearAll() {
         label.text! = "0"
+        expressionString = ""
+        firstNumber = "0"
+        secondNumber = ""
+        sign = .none
     }
-    func checkLabel() {
+    func clearLabel() {
         if expressionString.isEmpty && !label.text!.isEmpty {
             label.text! = ""
+        }
+    }
+    func checkLabel(_ symbol: String) {
+        if sign == .equal && expressionString == "number" {
+            firstNumber = "0"
+            secondNumber = ""
+            sign = .none
         }
     }
     
